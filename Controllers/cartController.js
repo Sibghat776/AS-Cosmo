@@ -83,50 +83,54 @@ export const getUserCart = asyncHandler(async (req, res, next) => {
 
 // 3. Update Cart Item Quantity
 export const updateCartItemQuantity = asyncHandler(async (req, res, next) => {
-    const { productId, quantity } = req.body; // New quantity
-    const userId = req.user.id;
+    try {
+        const { productId, quantity } = req.body; // New quantity
+        const userId = req.user.id;
 
-    if (!productId || quantity === undefined || quantity < 0) { // quantity can be 0 to remove
-        return next(createError(400, "Product ID and valid quantity are required."));
-    }
+        if (!productId || quantity === undefined || quantity < 0) { // quantity can be 0 to remove
+            return next(createError(400, "Product ID and valid quantity are required."));
+        }
 
-    let cart = await Cart.findOne({ user: userId });
+        let cart = await Cart.findOne({ user: userId });
 
-    if (!cart) {
-        return next(createError(404, "Cart not found for this user."));
-    }
+        if (!cart) {
+            return next(createError(404, "Cart not found for this user."));
+        }
 
-    const itemIndex = cart.items.findIndex(item => item.product.toString() === productId);
+        const itemIndex = cart.items.findIndex(item => item.product.toString() === productId);
 
-    if (itemIndex === -1) {
-        return next(createError(404, "Product not found in cart."));
-    }
+        if (itemIndex === -1) {
+            return next(createError(404, "Product not found in cart."));
+        }
 
-    const product = await Product.findById(productId);
-    if (!product) {
-        return next(createError(404, "Associated product not found.")); // Product may have been deleted
-    }
+        const product = await Products.findById(productId);
+        if (!product) {
+            return next(createError(404, "Associated product not found.")); // Product may have been deleted
+        }
 
-    if (quantity === 0) {
-        // Item ko cart se hata dain
-        cart.items.splice(itemIndex, 1);
+        if (quantity === 0) {
+            // Item ko cart se hata dain
+            cart.items.splice(itemIndex, 1);
+            await cart.save();
+            const populatedCart = await Cart.findById(cart._id).populate('items.product', 'name price images stock');
+            const successRes = createSuccess(200, "Item removed from cart successfully.");
+            return res.status(200).json({ successRes, data: populatedCart });
+        }
+
+        // Stock check for updated quantity
+        if (product.stock < quantity) {
+            return next(createError(400, `Only ${product.stock} items are available in stock for ${product.name}.`));
+        }
+
+        cart.items[itemIndex].quantity = quantity;
         await cart.save();
+
         const populatedCart = await Cart.findById(cart._id).populate('items.product', 'name price images stock');
-        const successRes = createSuccess(200, "Item removed from cart successfully.");
-        return res.status(200).json({ successRes, data: populatedCart });
+        const successRes = createSuccess(200, "Cart item quantity updated successfully.");
+        res.status(200).json({ successRes, data: populatedCart });
+    } catch (error) {
+        next(error);
     }
-
-    // Stock check for updated quantity
-    if (product.stock < quantity) {
-        return next(createError(400, `Only ${product.stock} items are available in stock for ${product.name}.`));
-    }
-
-    cart.items[itemIndex].quantity = quantity;
-    await cart.save();
-
-    const populatedCart = await Cart.findById(cart._id).populate('items.product', 'name price images stock');
-    const successRes = createSuccess(200, "Cart item quantity updated successfully.");
-    res.status(200).json({ successRes, data: populatedCart });
 });
 
 // 4. Remove Item from Cart

@@ -7,10 +7,16 @@ export const register = async (req, res, next) => {
     try {
         let salt = bcrypt.genSaltSync(10)
         let hash = bcrypt.hashSync(req.body.password, salt)
+        const date = new Date();
+        const formattedDate = date.toLocaleString("en-US", {
+            month: "short",
+            day: "numeric",
+        });
         let newUser = new Users({
             username: req.body.username,
             email: req.body.email,
-            password: hash
+            password: hash,
+            date: formattedDate
         })
         let existingUser = await Users.findOne({ username: req.body.username })
         if (existingUser) {
@@ -50,5 +56,46 @@ export const login = async (req, res, next) => {
             }).status(200).json({ successRes, data: otherDetails })
     } catch (error) {
         next(error)
+    }
+}
+
+export const logout = async (req, res, next) => {
+    try {
+        res.clearCookie("access_token", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict"
+        });
+        let successRes = createSuccess(200, "User has been logged out successfully");
+        res.status(200).json({ successRes });
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const getUsers = async (req, res, next) => {
+    try {
+        const users = await Users.find();
+        if (!users || users.length === 0) {
+            return next(createError(404, "No users found."));
+        }
+        let successRes = createSuccess(200, "Users retrieved successfully.");
+        res.status(200).json({ successRes, data: users });
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const getUser = async (req, res, next) => {
+    try {
+        const userId = req.params.id;
+        const user = await Users.findById(userId);
+        if (!user) {
+            return next(createError(404, "User not found."));
+        }
+        let successRes = createSuccess(200, "User retrieved successfully.");
+        res.status(200).json({ successRes, data: user });
+    } catch (error) {
+        next(error);
     }
 }

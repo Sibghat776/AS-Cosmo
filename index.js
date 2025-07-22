@@ -23,7 +23,7 @@ app.use(cookieParser())
 app.use("/api/v1/auth", authRoutes)
 app.use("/api/v1/products", productsRoutes)
 app.use("/api/v1/orders", ordersRoutes)
-app.use("/api/v1/cart", cartRoutes)
+app.use("/api/v1/cart", cartRoutes) 
 app.use("/api/v1/category", categoryRoutes)
 
 app.use((err, req, res, next) => {
