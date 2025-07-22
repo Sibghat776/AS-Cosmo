@@ -1,0 +1,54 @@
+import Users from "../Models/Users.js"
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { createError, createSuccess } from "../utils/responseHandlers.js";
+
+export const register = async (req, res, next) => {
+    try {
+        let salt = bcrypt.genSaltSync(10)
+        let hash = bcrypt.hashSync(req.body.password, salt)
+        let newUser = new Users({
+            username: req.body.username,
+            email: req.body.email,
+            password: hash
+        })
+        let existingUser = await Users.findOne({ username: req.body.username })
+        if (existingUser) {
+            return res.status(400).json("Username already taken!")
+        } else if (existingUser?.email === req.body.email) {
+            return res.status(400).json("Email already registered!")
+        } else if (req.body.password.length < 6) {
+            return res.status(400).json("Password must be at least 6 characters long!")
+        }
+        let successRes = createSuccess(200, "User has been created successfully")
+        await newUser.save()
+        res.status(200).json({ successRes, data: newUser })
+    } catch (error) {
+        next(error)
+    }
+}
+export const login = async (req, res, next) => {
+    try {
+        let user = await Users.findOne({ username: req.body.username, email: req.body.email })
+        if (!user) return next(createError(401, "User not found"))
+
+        let isPasswordCorrect = bcrypt.compareSync(req.body.password, user.password)
+
+        if (!isPasswordCorrect) return next(createError(400, "Wrong Credentials"))
+        if (user.email !== req.body.email) return next(createError(400, "Wrong Credentials"))
+        const token = jwt.sign(
+            {
+                id: user._id,
+                isAdmin: user.isAdmin
+            }, process.env.JWT || "cosmetics", { expiresIn: "3d" }
+        )
+        let { password, ...otherDetails } = user._doc
+        let successRes = createSuccess(200, "User has been logged in successfully")
+        res.
+            cookie("access_token", token, {
+                httpOnly: true
+            }).status(200).json({ successRes, data: otherDetails })
+    } catch (error) {
+        next(error)
+    }
+}
