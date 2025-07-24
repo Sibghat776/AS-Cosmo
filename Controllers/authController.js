@@ -19,7 +19,7 @@ export const register = async (req, res, next) => {
             date: formattedDate
         })
         let existingUser = await Users.findOne({ username: req.body.username })
-        if (existingUser) {
+        if (existingUser) {     
             return res.status(400).json("Username already taken!")
         } else if (existingUser?.email === req.body.email) {
             return res.status(400).json("Email already registered!")

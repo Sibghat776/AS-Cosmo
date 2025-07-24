@@ -9,6 +9,7 @@ import { connectDB } from './utils/connectDB.js';
 import cookieParser from 'cookie-parser';
 import { categoryRoutes } from './Routes/categoryRoutes.js';
 import { cartRoutes } from './Routes/cartRoutes.js';
+import { notificationRoutes } from './Routes/notificationRoutes.js';
 
 dotenv.config();
 let app = express();
@@ -25,6 +26,7 @@ app.use("/api/v1/products", productsRoutes)
 app.use("/api/v1/orders", ordersRoutes)
 app.use("/api/v1/cart", cartRoutes) 
 app.use("/api/v1/category", categoryRoutes)
+app.use("/api/v1/notifications", notificationRoutes)
 
 app.use((err, req, res, next) => {
     let errorStatus = err.status || 500

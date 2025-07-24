@@ -36,7 +36,6 @@ const OrderSchema = new Schema(
         shippingInfo: {
             address: { type: String, required: true },
             city: { type: String, required: true },
-            // state: { type: String, required: true }, // Optional: If applicable
             country: { type: String, required: true },
             pinCode: { type: String, required: true },
             phoneNo: { type: String, required: true },

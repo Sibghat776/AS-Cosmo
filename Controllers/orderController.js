@@ -3,6 +3,7 @@ import { createError, createSuccess } from '../utils/responseHandlers.js';
 import Orders from '../Models/Orders.js'; // CORRECTED: Ab import ka naam 'Orders' kar diya
 import Cart from '../Models/Cart.js';
 import Products from '../Models/Products.js';
+import { createNotification } from './notificationController.js';
 
 // Helper function to update product stock after order is placed or cancelled
 async function updateStock(productId, quantity) {
@@ -183,7 +184,7 @@ export const updateOrderStatus = asyncHandler(async (req, res, next) => {
 
         order.orderStatus = status;
         await order.save();
-
+        createNotification(order.user, `Your order status has been updated to ${status}.`, `/orders/getOrder/${order._id}`, order._id);
         const successRes = createSuccess(200, "Order status updated successfully.");
         res.status(200).json({ successRes, data: order });
     } catch (error) {
