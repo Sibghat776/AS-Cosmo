@@ -1,0 +1,18 @@
+.orders {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+//   background: #f9f9f9;
+
+  @media (max-width: 768px) {
+    padding: 16px;
+    gap: 18px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}

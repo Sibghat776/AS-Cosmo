@@ -1,0 +1,162 @@
+@mixin card-shadow {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.orderContainer {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    @include card-shadow;
+
+    @media (max-width: 768px) {
+        margin: 1rem;
+        padding: 1rem;
+    }
+}
+
+.title {
+    font-size: 2.5rem;
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 600;
+
+    @media (max-width: 768px) {
+        font-size: 2rem;
+    }
+}
+
+.noOrders {
+    text-align: center;
+    color: #6c757d;
+    font-size: 1.2rem;
+    padding: 2rem;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+}
+
+.orderList {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.orderCard {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid #e9ecef;
+    transition: transform 0.2s ease-in-out;
+    @include card-shadow;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+    }
+}
+
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.headerInfo {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.label {
+    font-weight: 500;
+    color: #495057;
+}
+
+.value {
+    font-weight: 600;
+    color: #343a40;
+}
+
+.status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.delivered {
+    background-color: #28a745;
+}
+
+.shipped {
+    background-color: #007bff;
+}
+
+.processing {
+    background-color: #ffc107;
+}
+
+.orderItems {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #e9ecef;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.itemName {
+    font-weight: 400;
+    color: #495057;
+}
+
+.itemDetails {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.orderFooter {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.totalLabel {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #343a40;
+    margin-right: 1rem;
+}
+
+.totalValue {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #28a745;
+}

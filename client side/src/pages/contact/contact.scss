@@ -1,0 +1,85 @@
+.contactPage {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 50px 60px;
+  background-color: white;
+  gap: 40px;
+
+  .contactForm {
+    flex: 1;
+    min-width: 300px;
+
+    h1 {
+      color: #d63384;
+      margin-bottom: 20px;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      input, textarea {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        background-color: white;
+        color: #333;
+        outline: none;
+      }
+
+      button {
+        padding: 12px;
+        background-color: #ff69b4;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 15px;
+
+        &:hover {
+          background-color: #ff85c1;
+        }
+      }
+    }
+  }
+
+  .contactInfo {
+    flex: 1;
+    min-width: 250px;
+
+    h2 {
+      color: #d63384;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .socials {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+
+      img {
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 30px;
+  }
+}

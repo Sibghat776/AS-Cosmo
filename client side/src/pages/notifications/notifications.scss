@@ -1,0 +1,15 @@
+.notifications {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  h1 {
+    font-size: 28px;
+    text-align: center;
+    color: rgb(51, 50, 50);
+    margin-bottom: 10px;
+  }
+}
