@@ -8,7 +8,6 @@ export const addToCart = asyncHandler(async (req, res, next) => {
 
     const { productId, quantity = 1 } = req.body;
     const userId = req.user.id; // Authenticated user ki ID
-    console.log(userId, "User ID from token:", userId);
     if (!productId) {
         return next(createError(400, "Product ID is required."));
     }
@@ -17,7 +16,8 @@ export const addToCart = asyncHandler(async (req, res, next) => {
     }
 
     // Product ko dhoondhe aur uska stock check karein
-    const product = await Products.findById(productId);
+    const product = await Products.findById(productId); // Populate user details if needed
+    console.log(product, "Product details fetched from DB");
     if (!product) {
         return next(createError(404, "Product not found."));
     }

@@ -12,16 +12,22 @@ export let verifyToken = (req, res, next) => {
         token = req.cookies.access_token; // Fallback to cookies
     }
 
+    // --- Yahan debugging line add karein ---
+    console.log("Received Token Value in Middleware:", token);
+
     if (!token) {
+        // Yeh block chalna chahiye agar token bilkul na ho
         return next(createError(401, "You are not authenticated! No token provided."));
     }
 
+    // `jwt malformed` ka error is line par aata hai, jab token ki value ghalat ho
     jwt.verify(token, process.env.JWT, (err, user) => {
         if (err) {
-            console.error("JWT Verification Error:", err); // Debugging
-            return next(createError(403, "Token is not valid!")); // 403 for invalid/expired token
+            console.error("JWT Verification Error:", err);
+            // Agar token invalid ho to 403 error dein
+            return next(createError(403, "Token is not valid or has expired!"));
         }
-        req.user = user; // Attach decoded user payload to req.user
+        req.user = user; // Decoded user payload ko request object se attach karein
         next();
     });
 };
@@ -32,7 +38,7 @@ export const verifyUser = (req, res, next) => {
             next()
         }
         else {
-            next(createError(401, "You are note authorized"))
+            next(createError(401, "You are not authorized"))
         }
     })
 }
@@ -43,7 +49,7 @@ export const verifyAdmin = (req, res, next) => {
             next()
         }
         else {
-            next(createError(401, "You are not authorized"))
+            next(createError(401, "You are not Admin !"))
         }
     })
 }

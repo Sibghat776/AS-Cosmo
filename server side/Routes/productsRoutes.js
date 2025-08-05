@@ -1,7 +1,7 @@
 import express from 'express';
 import { createProduct, deleteProduct, getProduct, getProducts, updateProduct } from '../Controllers/productsController.js';
 import upload from '../middlewares/upload.js';
-import { verifyToken, verifyUser } from '../utils/verifyToken.js';
+import { verifyAdmin, verifyToken, verifyUser } from '../utils/verifyToken.js';
 
 export let productsRoutes = express.Router();
 
@@ -14,4 +14,4 @@ productsRoutes.get('/getProducts/:id', verifyToken, getProducts);
 
 productsRoutes.get('/getProduct/:id', verifyToken, getProduct); // Assuming you want to get products by user ID or similar
 
-productsRoutes.delete('/deleteProduct/:id', verifyUser, verifyToken, deleteProduct);
+productsRoutes.delete('/deleteProduct/:id', verifyAdmin, deleteProduct);

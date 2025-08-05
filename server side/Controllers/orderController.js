@@ -26,7 +26,7 @@ export const createOrder = asyncHandler(async (req, res, next) => {
             totalPrice,
         } = req.body;
 
-        if (!shippingInfo || !paymentInfo || itemsPrice === undefined || taxPrice === undefined || shippingPrice === undefined || totalPrice === undefined) {
+        if (!shippingInfo || !paymentInfo || itemsPrice === undefined || shippingPrice === undefined || totalPrice === undefined) {
             return next(createError(400, "Please provide all required order details."));
         }
 
@@ -110,7 +110,7 @@ export const myOrders = asyncHandler(async (req, res, next) => {
     try {
         const userId = req.user.id;
 
-        const orders = await Orders.find({ user: userId }).populate('orderItems.product', 'name price images'); // CORRECTED: Orders.find use kar raha hai
+        const orders = await Orders.find({ user: userId }).populate('orderItems.product', 'name price images').populate('user', 'username email'); // CORRECTED: Orders.find use kar raha hai
 
         if (!orders || orders.length === 0) {
             const successRes = createSuccess(200, "You have not placed any orders yet.");

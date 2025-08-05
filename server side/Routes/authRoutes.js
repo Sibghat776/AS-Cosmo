@@ -8,7 +8,7 @@ authRoutes.post('/register', register);
 
 authRoutes.post('/login', login);
 
-authRoutes.put("/update", verifyToken, updateUser); 
+authRoutes.put("/update", verifyToken, updateUser);
 
 authRoutes.get('/logout', logout);
 
