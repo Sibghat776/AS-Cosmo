@@ -47,7 +47,7 @@ const Signup = () => {
         message: res.data.message || 'Signup successful!',
       });
 
-              navigate('/');
+      navigate('/');
 
     } catch (error) {
       toastAlert({
@@ -114,10 +114,10 @@ const Signup = () => {
 
         {/* Submit Button */}
         <div className='btnCon' style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "20px"
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "20px"
         }} >
           <button onClick={signupHandler} style={{
             width: "100%"

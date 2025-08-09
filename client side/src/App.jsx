@@ -21,56 +21,58 @@ import NotFoundPage from './pages/notFoundPage/NotFoundPage';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
 import Product from './pages/product/Product';
 import OrderPage from "./components/orders/OrderPage"
+import AdminPanel from './Admin Panel/AdminPanel';
 
 function App() {
-const location = useLocation()
+  const location = useLocation()
   const hideLayoutRoutes = ['/login', '/signup', '/notfound'];
   const hideLayout = hideLayoutRoutes.includes(location.pathname);
 
   return (
     <>
 
-<ToastContainer
-position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick={false}
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="light"
-transition={Bounce}
-/>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
 
-    {!hideLayout && <Navbar />}
-    <ScrollToTop />
+      {!hideLayout && <Navbar />}
+      <ScrollToTop />
       <Routes>
-<Route element={<PrivateRoute />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/products/:id" element={<Products />} />
-        <Route path="/product/:id" element={<Product />} />
-        <Route path="/peoples" element={<Peoples />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/notifications" element={<Notifications />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/addProduct" element={<AddProduct />} />
-        <Route path="/editProfile" element={<EditProfile />} />
-        <Route path='/orderPage' element={<OrderPage/>}/>
-</Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/admin/*" element={<AdminPanel />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/products/:id" element={<Products />} />
+          <Route path="/product/:id" element={<Product />} />
+          <Route path="/peoples" element={<Peoples />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/addProduct" element={<AddProduct />} />
+          <Route path="/editProfile" element={<EditProfile />} />
+          <Route path='/orderPage' element={<OrderPage />} />
+        </Route>
 
-<Route element={<AuthRoute />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-</Route>
+        <Route element={<AuthRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
 
-<Route path="*" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage />} />
 
       </Routes>
-   {!hideLayout && <Footer />}
+      {!hideLayout && <Footer />}
     </>
   );
 }

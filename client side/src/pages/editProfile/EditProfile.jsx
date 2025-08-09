@@ -56,7 +56,7 @@ const EditProfile = () => {
       return data.secure_url;
     } catch (err) {
       console.error("Cloudinary upload error:", err);
-            setIsLoading(false)
+      setIsLoading(false)
       return null;
     }
   };
@@ -80,7 +80,7 @@ const EditProfile = () => {
       if (location) body.location = location;
       if (gender) body.gender = gender;
       if (imageUrl) body.profilePicture = imageUrl;
-
+      console.log("going to update profile")
       const res = await axios.put('http://localhost:3000/api/v1/auth/update', body, {
         withCredentials: true,
         headers: {
@@ -102,8 +102,8 @@ const EditProfile = () => {
       });
       setPreview(null);
       setSelectedImage(null);
-      
-window.location.reload()
+
+      window.location.reload()
 
     } catch (err) {
       console.error(err);
@@ -113,21 +113,21 @@ window.location.reload()
 
   const handleUploadAndSubmit = async () => {
 
-      const { firstName, lastName, desc, mobileNumber, location, gender } = formData;
+    const { firstName, lastName, desc, mobileNumber, location, gender } = formData;
 
-  const isAllFieldsEmpty =
-    !firstName.trim() &&
-    !lastName.trim() &&
-    !desc.trim() &&
-    !mobileNumber.trim() &&
-    !location.trim() &&
-    !gender.trim() &&
-    !selectedImage;
+    const isAllFieldsEmpty =
+      !firstName.trim() &&
+      !lastName.trim() &&
+      !desc.trim() &&
+      !mobileNumber.trim() &&
+      !location.trim() &&
+      !gender.trim() &&
+      !selectedImage;
 
-  if (isAllFieldsEmpty) {
-    toast.error("Enter something");
-    return;
-  }
+    if (isAllFieldsEmpty) {
+      toast.error("Enter something");
+      return;
+    }
 
     let imageUrl = formData.profilePicture;
 
@@ -188,15 +188,15 @@ window.location.reload()
         accept="image/*"
       />
 
-      <div className="btns" style={{ display: "flex", alignItems: "center", flexDirection: "column"}}>
+      <div className="btns" style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
         <div className="uploadPicBtn">
-          <button onClick={() => inputRef.current.click()} style={{backgroundColor: "#78003c"}}>Upload Picture</button>
+          <button onClick={() => inputRef.current.click()} style={{ backgroundColor: "#78003c" }}>Upload Picture</button>
         </div>
         <div className="saveBtn">
           {
             isLoading ?
-            <button>Updating profile...</button> :
-            <button onClick={handleUploadAndSubmit}>Update Profile</button>
+              <button>Updating profile...</button> :
+              <button onClick={handleUploadAndSubmit}>Update Profile</button>
           }
         </div>
       </div>

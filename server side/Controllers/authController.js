@@ -84,6 +84,7 @@ export const updateUser = async (req, res, next) => {
     try {
         const userId = req.user.id; // assuming `req.user` is already set via auth middleware
         // Remove empty strings or undefined fields
+        console.log(req.user)
         const updateData = {};
         const fields = ["firstName", "lastName", "mobileNumber", "location", "profilePicture", "gender", "desc"];
 
