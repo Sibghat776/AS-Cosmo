@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Note: In a real app, you would import your components here
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import Home from "./Pages/Home";
@@ -9,7 +8,6 @@ import Users from "./Pages/Users";
 import Products from "./Pages/Products";
 import User from "./Pages/User";
 import NewUser from "./Pages/NewUser";
-import Widget from "./components/Widget";
 import Chart from "./components/Chart";
 
 const App = () => {
@@ -17,16 +15,20 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      {/* Main container with a clean, responsive layout */}
-      <div className="flex w-full min-h-screen bg-gray-100">
-        <Sidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+      <div className="flex w-full h-screen bg-gray-100 overflow-hidden">
+        {/* Sidebar */}
+        <Sidebar
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+        />
 
-        {/* Content area: flex-1 takes remaining width, flex-col for stacking Navbar and page content */}
-        <div className="flex-1 flex flex-col transition-all duration-300">
+        {/* Main Content Wrapper */}
+        <div className="flex-1 flex flex-col">
+          {/* Navbar */}
           <Navbar setIsSidebarOpen={setIsSidebarOpen} />
 
-          {/* Main content area with padding */}
-          <div className="p-4 md:p-6 lg:p-8 flex-1 overflow-y-auto">
+          {/* Scrollable Page Content */}
+          <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/users" element={<Users />} />
@@ -35,7 +37,7 @@ const App = () => {
               <Route path="/new-user" element={<NewUser />} />
               <Route path="/analytics" element={<Chart />} />
             </Routes>
-          </div>
+          </main>
         </div>
       </div>
     </BrowserRouter>

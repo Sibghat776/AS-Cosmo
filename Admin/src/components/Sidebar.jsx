@@ -1,113 +1,112 @@
-import React from "react";
+// Sidebar.jsx
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-    LayoutDashboard,
-    BarChart,
+    Home,
+    BarChart2,
     TrendingUp,
-    User,
-    ShoppingBag,
+    Users,
+    UserPlus,
+    Package,
     DollarSign,
     Mail,
-    List,
-    MessageCircle,
+    MessageSquare,
+    Bell,
     Briefcase,
-    Flag,
-    UserPlus
+    PieChart,
+    FileText,
 } from "lucide-react";
 
-/**
- * A responsive sidebar component for an admin dashboard.
- * Contains navigation links grouped into categories.
- */
 const Sidebar = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleSidebar = () => setIsOpen(!isOpen);
+
+    const menuSection = (title, links) => (
+        <div className="mb-6">
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-4 mb-3">
+                {title}
+            </h3>
+            <ul className="flex flex-col gap-1">
+                {links.map(({ to, icon: Icon, label }) => (
+                    <Link
+                        key={label}
+                        to={to}
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-indigo-100 hover:text-indigo-700 transition-all duration-200 group"
+                    >
+                        <Icon
+                            size={18}
+                            className="text-gray-500 group-hover:text-indigo-600 transition-colors"
+                        />
+                        <span className="text-sm font-medium">{label}</span>
+                    </Link>
+                ))}
+            </ul>
+        </div>
+    );
+
     return (
-        <div className="w-64 h-screen overflow-y-auto sticky top-0 bg-white shadow-lg border-r border-gray-200 p-4">
-            <div className="text-sm">
-                {/* Menu Group: Dashboard */}
-                <div className="mb-8">
-                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Dashboard</h3>
-                    <ul className="space-y-1">
-                        <Link to="/" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <LayoutDashboard size={18} />
-                            Home
-                        </Link>
-                        <Link to="/analytics" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <BarChart size={18} />
-                            Analytics
-                        </Link>
-                        <Link to="/sales" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <TrendingUp size={18} />
-                            Sales
-                        </Link>
-                    </ul>
+        <>
+            {/* Mobile Header */}
+            <div className="lg:hidden flex justify-start items-start p-2 bg-white shadow-md sticky top-0 z-500">
+                <h1 className="text-sm font-bold text-indigo-600">Admin Panel</h1>
+                <button
+                    onClick={toggleSidebar}
+                    className="p-2 rounded-md hover:bg-gray-100"
+                >
+                    ☰
+                </button>
+            </div>
+
+            {/* Sidebar */}
+            <div
+                className={`fixed lg:static top-0 left-0 h-full lg:h-screen w-64 bg-white shadow-xl border-r flex flex-col transition-transform duration-300 z-50 ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+                    }`}
+            >
+                {/* Brand */}
+                <div className="hidden lg:flex items-center justify-center h-16 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold text-lg shadow-md">
+                    Admin Panel
                 </div>
 
-                {/* Menu Group: Quick Menu */}
-                <div className="mb-8">
-                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Quick Menu</h3>
-                    <ul className="space-y-1">
-                        <Link to="/users" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <User size={18} />
-                            Users
-                        </Link>
-                        <Link to="/new-user" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <UserPlus size={18} />
-                            Create User
-                        </Link>
-                        <Link to="/products" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <ShoppingBag size={18} />
-                            Products
-                        </Link>
-                        <Link to="/transactions" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <DollarSign size={18} />
-                            Transactions
-                        </Link>
-                        <Link to="/reports" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <BarChart size={18} />
-                            Reports
-                        </Link>
-                    </ul>
-                </div>
+                {/* Scrollable Menu */}
+                <div className="flex-1 overflow-y-auto py-6 custom-scrollbar">
+                    {menuSection("Dashboard", [
+                        { to: "/", icon: Home, label: "Home" },
+                        { to: "/analytics", icon: BarChart2, label: "Analytics" },
+                        { to: "/sales", icon: TrendingUp, label: "Sales" },
+                    ])}
 
-                {/* Menu Group: Notifications */}
-                <div className="mb-8">
-                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Notifications</h3>
-                    <ul className="space-y-1">
-                        <Link to="/mail" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <Mail size={18} />
-                            Mail
-                        </Link>
-                        <Link to="/feedback" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <List size={18} />
-                            Feedback
-                        </Link>
-                        <Link to="/messages" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <MessageCircle size={18} />
-                            Messages
-                        </Link>
-                    </ul>
-                </div>
+                    {menuSection("Quick Menu", [
+                        { to: "/users", icon: Users, label: "Users" },
+                        { to: "/new-user", icon: UserPlus, label: "Create User" },
+                        { to: "/products", icon: Package, label: "Products" },
+                        { to: "/transactions", icon: DollarSign, label: "Transactions" },
+                        { to: "/reports", icon: FileText, label: "Reports" },
+                    ])}
 
-                {/* Menu Group: Staff */}
-                <div>
-                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Staff</h3>
-                    <ul className="space-y-1">
-                        <Link to="/manage" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <Briefcase size={18} />
-                            Manage
-                        </Link>
-                        <Link to="/analytics-staff" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <BarChart size={18} />
-                            Analytics
-                        </Link>
-                        <Link to="/reports-staff" className="flex items-center gap-3 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 p-2 rounded-lg transition-colors duration-200">
-                            <Flag size={18} />
-                            Reports
-                        </Link>
-                    </ul>
+                    {menuSection("Notifications", [
+                        { to: "/mail", icon: Mail, label: "Mail" },
+                        { to: "/feedback", icon: MessageSquare, label: "Feedback" },
+                        { to: "/messages", icon: Bell, label: "Messages" },
+                    ])}
+
+                    {menuSection("Staff", [
+                        { to: "/manage", icon: Briefcase, label: "Manage" },
+                        { to: "/analytics-staff", icon: PieChart, label: "Analytics" },
+                        { to: "/reports-staff", icon: FileText, label: "Reports" },
+                    ])}
                 </div>
             </div>
-        </div>
+
+            {/* Overlay for Mobile */}
+            {isOpen && (
+                <div
+                    onClick={toggleSidebar}
+                    className="fixed inset-0 bg-black/40 lg:hidden z-40"
+                ></div>
+            )}
+        </>
     );
 };
 

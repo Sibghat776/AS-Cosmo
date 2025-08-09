@@ -1,9 +1,6 @@
 import React from "react";
-import { Card } from "..//components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import Featured from "../components/Featured";
 import Chart from "../components/Chart";
-import Widget from "../components/Widget";
 import Table from "../components/Table";
 
 const Home = () => {
@@ -17,21 +14,32 @@ const Home = () => {
   ];
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4 text-[#1e293b]">Dashboard</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <Widget type="user" />
-        <Widget type="order" />
-        <Widget type="earning" />
-        <Widget type="balance" />
-      </div>
-      <Featured />
-      <div className="mt-8">
-        <Chart title="User Analytics" dataKey="users" grid data={chartData} />
-      </div>
-      <div className="mt-8">
-        <Table />
+    <div className="flex flex-col h-screen bg-gray-50">
+      {/* Scrollable content wrapper */}  
+      <div className="flex-1 overflow-y-scroll p-4 ">
+
+        {/* Title */}
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-6 text-gray-800">
+          Dashboard
+        </h1>
+
+        {/* Featured Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Featured />
+        </div>
+
+        {/* Chart Section */}
+        <div className="mt-8 bg-white rounded-xl shadow-md p-4 sm:p-6">
+          <Chart title="User Analytics" dataKey="users" grid data={chartData} />
+        </div>
+
+        {/* Table Section */}
+        <div className="mt-8 bg-white rounded-xl shadow-md p-4 sm:p-6 overflow-x-auto">
+          <Table />
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default React.memo(Home);
