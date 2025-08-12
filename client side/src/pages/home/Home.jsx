@@ -32,12 +32,12 @@ const Home = () => {
 </div>
 
 <div className="categoriesCards">
-    <HomePageCards name={"Face"} img={"/img/cat_1.webp"} id={"689a2f17f3941a37861bdcfe"}/>
-    <HomePageCards name={"Eyes"} img={"/img/cat_2.jpg"} id={"689a2f2ef3941a37861bdd01"}/>
-    <HomePageCards name={"Lips"} img={"/img/cat_3.avif"} id={"689a2f40f3941a37861bdd06"}/>
-    <HomePageCards name={"Nails"} img={"/img/cat_4.webp"} id={"689a2e629271f7d0e8a89fdd"}/>
-    <HomePageCards name={"Skincare"} img={"/img/cat_5.webp"} id={"689a2e99f3941a37861bdcfb"}/>
-    <HomePageCards name={"Tools"} img={"/img/cat_6.webp"} id={"689a2f5ff3941a37861bdd09"}/>
+    <HomePageCards name={"Face"} img={"/img/cat_1.webp"} id={"6883a3e445f297b465471a0d"}/>
+    <HomePageCards name={"Eyes"} img={"/img/cat_2.jpg"} id={"6883a47c57f123e61a89cfe1"}/>
+    <HomePageCards name={"Lips"} img={"/img/cat_3.avif"} id={"6883a49457f123e61a89cfe4"}/>
+    <HomePageCards name={"Nails"} img={"/img/cat_4.webp"} id={"6883a4a557f123e61a89cfe7"}/>
+    <HomePageCards name={"Skincare"} img={"/img/cat_5.webp"} id={"6883a4ba57f123e61a89cfea"}/>
+    <HomePageCards name={"Tools"} img={"/img/cat_6.webp"} id={"6883a4c757f123e61a89cfed"}/>
 </div>
 
 <div className="mainContent">

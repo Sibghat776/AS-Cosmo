@@ -10,7 +10,7 @@ const Product = () => {
   const { id } = useParams();
   const [productQuantity, setProductQuantity] = useState(0)
   const [err, setErr] = useState(false)
-  const {items, setItems} = useContext(CartContext)
+  const { items, setItems } = useContext(CartContext)
 
   const fetchProduct = async () => {
     try {
@@ -28,31 +28,31 @@ const Product = () => {
     }
   };
 
-  const addToCart = ()=> {
+  const addToCart = () => {
 
-if (productQuantity <= 0) {
- return toastAlert({
-    type: "error",
-    message: "Select quantity first."
-  })
-}
+    if (productQuantity <= 0) {
+      return toastAlert({
+        type: "error",
+        message: "Select quantity first."
+      })
+    }
 
     const data = {
-  name: product.name,
-  img: product.images[0].url,
-  price: product.price,
-  description: product.description,
-  quantity: productQuantity
-}
-const itemsCopy = [...items]
-itemsCopy.push(data)
-localStorage.setItem("items", JSON.stringify(itemsCopy))
-setItems(itemsCopy)
-toastAlert({
-  type: "success",
-  message: "Item added to cart!"
-})
-setProductQuantity(0)
+      name: product.name,
+      img: product.images[0].url,
+      price: product.price,
+      description: product.description,
+      quantity: productQuantity
+    }
+    const itemsCopy = [...items]
+    itemsCopy.push(data)
+    localStorage.setItem("items", JSON.stringify(itemsCopy))
+    setItems(itemsCopy)
+    toastAlert({
+      type: "success",
+      message: "Item added to cart!"
+    })
+    setProductQuantity(0)
   }
 
   useEffect(() => {
@@ -73,24 +73,24 @@ setProductQuantity(0)
 
           <div className="options">
             <div className="quantity">
-              <button onClick={()=> {
+              <button onClick={() => {
                 productQuantity > 0 ? setProductQuantity(productQuantity - 1) : null
-                    setErr(false)
+                setErr(false)
               }}>-</button>
               <span>{productQuantity}</span>
-              <button onClick={()=> {
-if (productQuantity > 18) {
-    setErr(true)
-    setProductQuantity(20)
-} else {
-    setErr(false)
-    setProductQuantity(productQuantity + 1)
-}
+              <button onClick={() => {
+                if (productQuantity > 18) {
+                  setErr(true)
+                  setProductQuantity(20)
+                } else {
+                  setErr(false)
+                  setProductQuantity(productQuantity + 1)
+                }
               }}>+</button>
-{err && <span style={{fontSize: "14px", color: "gray", lineHeight: "19px"}}>You can only add up to 20 items at a time. Please reduce the quantity.</span>}
+              {err && <span style={{ fontSize: "14px", color: "gray", lineHeight: "19px" }}>You can only add up to 20 items at a time. Please reduce the quantity.</span>}
             </div>
           </div>
-            <button className="addToCart" onClick={addToCart}>Add to Cart</button>
+          <button className="addToCart" onClick={addToCart}>Add to Cart</button>
 
           <div className="meta">
             <p>
