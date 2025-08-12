@@ -14,20 +14,19 @@ export const createProduct = asyncHandler(async (req, res, next) => {
 
     for (const file of req.files) {
         try {
-            const uploadedImage = await uploadToCloudinary(file.path, "uploads");
+            const result = await uploadToCloudinary(file.buffer, "uploads");
 
-            images.push({
-                public_id: uploadedImage.public_id,
-                url: uploadedImage.secure_url
+            res.json({
+                public_id: result.public_id,
+                url: result.secure_url
             });
-
-        } catch (error) {
-            return next(createError(500, "Image upload failed."));
+        } catch (err) {
+            next(err);
         }
     }
 
     const { name, description, price, category, stock } = req.body;
-    
+
     if (!name || !price || !category) {
         return next(createError(400, "Name, Price and Category are required."));
     }
@@ -93,45 +92,45 @@ export const updateProduct = asyncHandler(async (req, res, next) => {
 });
 
 export const getProducts = asyncHandler(async (req, res, next) => {
-  try {
-    const { id } = req.params;
-// console.log(id, "====>>> id")
-    const allProducts = await Products.find()
+    try {
+        const { id } = req.params;
+        // console.log(id, "====>>> id")
+        const allProducts = await Products.find()
 
-// console.log(allProducts, "===>>> allProducts")
+        // console.log(allProducts, "===>>> allProducts")
 
-// allProducts.forEach((product) => {
-//   const catId = typeof product.category === "object"
-//     ? product.category._id?.toString()
-//     : product.category?.toString();
+        // allProducts.forEach((product) => {
+        //   const catId = typeof product.category === "object"
+        //     ? product.category._id?.toString()
+        //     : product.category?.toString();
 
-//   console.log("Comparing:", catId, "==", id, "=>", catId === id);
-// });
+        //   console.log("Comparing:", catId, "==", id, "=>", catId === id);
+        // });
 
-    const matchedProducts = allProducts.filter((product) => {
-  const catId = typeof product.category === "object"
-    ? product.category._id?.toString()
-    : product.category?.toString();
+        const matchedProducts = allProducts.filter((product) => {
+            const catId = typeof product.category === "object"
+                ? product.category._id?.toString()
+                : product.category?.toString();
 
-  return catId === id;
-});
+            return catId === id;
+        });
 
-    console.log(matchedProducts, "===>>> matchedProducts")
+        console.log(matchedProducts, "===>>> matchedProducts")
 
-    if (matchedProducts.length === 0) {
-      return res.status(200).json({
-        success: false,
-        message: "No product found in this Category",
-        data: [],
-      });
+        if (matchedProducts.length === 0) {
+            return res.status(200).json({
+                success: false,
+                message: "No product found in this Category",
+                data: [],
+            });
+        }
+
+        const successRes = createSuccess(200, "Products retrieved successfully");
+        res.status(200).json({ successRes, data: matchedProducts });
+
+    } catch (error) {
+        next(error);
     }
-
-    const successRes = createSuccess(200, "Products retrieved successfully");
-    res.status(200).json({ successRes, data: matchedProducts });
-
-  } catch (error) {
-    next(error);
-  }
 });
 
 export const getProduct = asyncHandler(async (req, res, next) => {
