@@ -1,0 +1,103 @@
+.checkout {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #fff0f6;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(255, 192, 203, 0.3);
+  font-family: Arial, sans-serif;
+
+  h2 {
+    text-align: center;
+    color: #d63384;
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+
+  .inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    font-weight: 500;
+    color: #444;
+  }
+
+    input {
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid #ffb6c1;
+      font-size: 15px;
+      width: 100%;
+      transition: border-color 0.3s;
+
+      &:focus {
+        border-color: #d63384;
+        outline: none;
+      }
+    }
+
+    .confirmOrderBtn {
+      margin-top: 10px;
+      padding: 14px 0;
+      background-color: #d63384;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+
+      &:hover {
+        background-color: #c2185b;
+      }
+    }
+  }
+
+  .note {
+    margin-top: 25px;
+    padding: 15px 20px;
+    background-color: #fff4f7;
+    border-left: 4px solid #d63384;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #5c2c3b;
+    position: relative;
+    margin-top: 50px;
+
+    // &::before {
+    //   content: '⚠ Important Note:';
+    //   font-weight: bold;
+    //   color: #D63384;
+    //   display: block;
+    //   margin-bottom: 5px;
+    // }
+  }
+
+  .paymentMethod {
+  background-color: #fff4f7;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ffb6c1;
+  font-size: 15px;
+  color: #5c2c3b;
+
+  p {
+    margin-top: 5px;
+    font-weight: 500;
+    color: #d63384;
+  }
+}
+
+}

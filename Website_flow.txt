@@ -1,0 +1,29 @@
+Website flow:
+signup
+login
+profile update
+_________________
+
+product add
+product delete
+product update
+product get 
+product get all
+
+___________________
+
+
+cart add
+cart get
+cart delete 
+
+_________________
+
+orders get
+orders delete
+
+___________________
+
+like
+unlike
+
